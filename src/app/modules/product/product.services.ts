@@ -19,16 +19,37 @@ const createProductInDB = async (product: IProduct) => {
 // * Find a product in the database *
 
 const findProductById = async (productId: string) => {
-  const product = await Product.findOne({ id: productId });
+  const product = await Product.findOne({ _id: productId });
   return product;
+};
+
+// * Fetch products based on a filter *
+
+const findProductsByFilter = async (filter: any) => {
+  const { category, brand, name } = filter;
+
+  if (category) {
+    filter.category = { $regex: category, $options: 'i' };
+  }
+
+  if (brand) {
+    filter.brand = { $regex: brand, $options: 'i' };
+  }
+
+  if (name) {
+    filter.name = { $regex: name, $options: 'i' };
+  }
+
+  const products = await Product.find(filter);
+  return products;
 };
 
 // * Update an existing product in the database *
 
-const updateProductInDB = async (productId: string) => {
-  const updatedProduct = await Product.findOne(
-    { id: productId },
-    { $set: { status: 'sold' } }
+const updateProductInDB = async (productId: string, { product }: any) => {
+  const updatedProduct = await Product.findOneAndUpdate(
+    { _id: productId },
+    { $set: product }
   );
   return updatedProduct;
 };
@@ -36,7 +57,7 @@ const updateProductInDB = async (productId: string) => {
 // * Delete an existing product in the database *
 
 const deleteProductInDB = async (productId: string) => {
-  const deletedProduct = await Product.findOne({ id: productId });
+  const deletedProduct = await Product.deleteOne({ _id: productId });
   return deletedProduct;
 };
 
@@ -44,6 +65,7 @@ const productServices = {
   findAllProducts,
   createProductInDB,
   findProductById,
+  findProductsByFilter,
   updateProductInDB,
   deleteProductInDB,
 };

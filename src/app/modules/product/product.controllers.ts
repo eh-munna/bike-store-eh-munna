@@ -3,23 +3,43 @@ import productServices from './product.services';
 
 // * Get all the products *
 
-const getAllProducts = async (req: Request, res: Response) => {
+// Controller: Fetch all products or filter by category, brand, or name
+const getAllProducts = async (req: Request, res: Response): Promise<any> => {
   try {
-    // Call service to fetch all products from the database
-    const products = await productServices.findAllProducts();
+    // Extract query parameters: category, brand, name
+    const filter = req.query;
 
-    // Send success response with the products data
-    res.status(200).json({
-      message: 'Products fetched successfully',
+    // If no filters are provided, return all products
+    if (!filter) {
+      const products = await productServices.findAllProducts();
+      return res.status(200).json({
+        message: 'All products fetched successfully.',
+        success: true,
+        data: products,
+      });
+    }
+
+    // Fetch filtered products from service
+    const products = await productServices.findProductsByFilter(filter);
+
+    if (products.length === 0) {
+      return res.status(404).json({
+        message: 'No products found for the given search criteria.',
+        success: false,
+        data: [],
+      });
+    }
+
+    return res.status(200).json({
+      message: 'Bikes retrieved successfully',
       success: true,
       data: products,
     });
   } catch (err: any) {
-    // Send error response if something goes wrong
-    res.status(500).json({
-      message: 'An error occurred while fetching products',
+    return res.status(500).json({
+      message: 'An error occurred while fetching bikes.',
       success: false,
-      error: err,
+      error: err.message || err,
       stack: err.stack,
     });
   }
@@ -45,7 +65,7 @@ const createProduct = async (req: Request, res: Response) => {
     res.status(500).json({
       message: 'An error occurred while creating the bike',
       success: false,
-      error: err,
+      error: err.message || err,
       stack: err.stack,
     });
   }
@@ -71,7 +91,7 @@ const getProductById = async (req: Request, res: Response) => {
     res.status(500).json({
       message: 'An error occurred while fetching the bike',
       success: false,
-      error: err,
+      error: err.message || err,
       stack: err.stack,
     });
   }
@@ -82,9 +102,13 @@ const updateProduct = async (req: Request, res: Response) => {
   try {
     // Extract product ID from the request parameters
     const { productId } = req.params;
+    const updateData = req.body;
 
     // Call service to update the product in the database
-    const product = await productServices.updateProductInDB(productId);
+    const product = await productServices.updateProductInDB(
+      productId,
+      updateData
+    );
 
     // Send success response with the updated product data
     res.status(200).json({
@@ -97,7 +121,7 @@ const updateProduct = async (req: Request, res: Response) => {
     res.status(500).json({
       message: 'An error occurred while updating the bike',
       success: false,
-      error: err,
+      error: err.message || err,
       stack: err.stack,
     });
   }
@@ -111,15 +135,15 @@ const deleteProduct = async (req: Request, res: Response) => {
     // Send success response with the deleted product data
     res.status(200).json({
       message: 'Bike deleted successfully',
-      success: true,
-      data: product,
+      status: true,
+      data: {},
     });
   } catch (err: any) {
     // Send error response if something goes wrong
     res.status(500).json({
       message: 'An error occurred while deleting the bike',
       success: false,
-      error: err,
+      error: err.message || err,
       stack: err.stack,
     });
   }

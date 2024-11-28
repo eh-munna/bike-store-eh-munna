@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', productControllers.getAllProducts);
 
 // * Endpoint to create a new product *
-router.post('/create-product', productControllers.createProduct);
+router.post('/', productControllers.createProduct);
 
 // * Endpoint to update an existing product *
 router.put('/:productId', productControllers.updateProduct);
