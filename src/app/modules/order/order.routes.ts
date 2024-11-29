@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/', orderControllers.createOrder);
 
 // * Endpoint to get the revenues of the orders *
-// router.get('/revenue', orderControllers.getRevenues);
+router.get('/revenue', orderControllers.getRevenues);
 
 const orderRoutes = router;
 export default orderRoutes;

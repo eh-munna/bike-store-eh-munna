@@ -14,7 +14,7 @@ const getAllProducts = async (req: Request, res: Response): Promise<any> => {
       const products = await productServices.findAllProducts();
       return res.status(200).json({
         message: 'All products fetched successfully.',
-        success: true,
+        status: true,
         data: products,
       });
     }
@@ -25,20 +25,20 @@ const getAllProducts = async (req: Request, res: Response): Promise<any> => {
     if (products.length === 0) {
       return res.status(404).json({
         message: 'No products found for the given search criteria.',
-        success: false,
+        status: false,
         data: [],
       });
     }
 
     return res.status(200).json({
       message: 'Bikes retrieved successfully',
-      success: true,
+      status: true,
       data: products,
     });
   } catch (err: any) {
     return res.status(500).json({
       message: 'An error occurred while fetching bikes.',
-      success: false,
+      status: false,
       error: err.message || err,
       stack: err.stack,
     });
@@ -57,14 +57,14 @@ const createProduct = async (req: Request, res: Response) => {
     // Send success response with the created product data
     res.status(200).json({
       message: 'Bike created successfully',
-      success: true,
+      status: true,
       data: createdProduct,
     });
   } catch (err: any) {
     // Send error response if something goes wrong
     res.status(500).json({
       message: 'An error occurred while creating the bike',
-      success: false,
+      status: false,
       error: err.message || err,
       stack: err.stack,
     });
@@ -83,14 +83,14 @@ const getProductById = async (req: Request, res: Response) => {
     // Send success response with the product data
     res.status(200).json({
       message: 'Bike fetched successfully',
-      success: true,
+      status: true,
       data: product,
     });
   } catch (err: any) {
     // Send error response if something goes wrong
     res.status(500).json({
       message: 'An error occurred while fetching the bike',
-      success: false,
+      status: false,
       error: err.message || err,
       stack: err.stack,
     });
@@ -113,14 +113,14 @@ const updateProduct = async (req: Request, res: Response) => {
     // Send success response with the updated product data
     res.status(200).json({
       message: 'Bike updated successfully',
-      success: true,
+      status: true,
       data: product,
     });
   } catch (err: any) {
     // Send error response if something goes wrong
     res.status(500).json({
       message: 'An error occurred while updating the bike',
-      success: false,
+      status: false,
       error: err.message || err,
       stack: err.stack,
     });
@@ -142,7 +142,7 @@ const deleteProduct = async (req: Request, res: Response) => {
     // Send error response if something goes wrong
     res.status(500).json({
       message: 'An error occurred while deleting the bike',
-      success: false,
+      status: false,
       error: err.message || err,
       stack: err.stack,
     });
