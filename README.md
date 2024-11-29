@@ -1,3 +1,5 @@
+# Documentation is not ready yet...
+
 # Bike Store Express Application
 
 This is a TypeScript-based Express application for managing a Bike Store. It integrates MongoDB using Mongoose to manage products (bikes) and orders. The application includes endpoints for performing CRUD operations on bikes and managing customer orders. Additionally, it provides functionality to calculate total revenue from orders.
