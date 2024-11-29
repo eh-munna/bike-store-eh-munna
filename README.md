@@ -1,4 +1,4 @@
-# Documentation is not ready yet...
+# Documentation is not ready yet and it is a copy from CHAT GPT...
 
 # Bike Store Express Application
 
@@ -38,19 +38,9 @@ To set up the project locally, follow these steps:
 
 ```bash
 git clone https://github.com/yourusername/bike-store-eh-munna.git
-cd bike-store-eh-munna
-
-It seems like the markdown formatting got disrupted when you copied the content. Below is the corrected version with the entire content inside proper markdown code blocks:
-
-```markdown
-## Project Setup
-
-To set up the project locally, follow these steps:
-
-### 1. Clone the Repository
+```
 
 ```bash
-git clone https://github.com/yourusername/bike-store-eh-munna.git
 cd bike-store-eh-munna
 ```
 
@@ -85,6 +75,3 @@ In production mode:
 ```bash
 npm run start:prod
 ```
-```
-
-With this, everything should be properly formatted inside the markdown and will render correctly when displayed on platforms like GitHub or other markdown viewers.
