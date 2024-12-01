@@ -4,7 +4,7 @@ import productServices from './product.services';
 // * Get all the products *
 
 // Controller: Fetch all products or filter by category, brand, or name
-const getAllProducts = async (req: Request, res: Response): Promise<any> => {
+const getAllProducts = async (req: Request, res: Response) => {
   try {
     // Extract query parameters: category, brand, name
     const filter = req.query;
@@ -12,8 +12,8 @@ const getAllProducts = async (req: Request, res: Response): Promise<any> => {
     // If no filters are provided, return all products
     if (!filter) {
       const products = await productServices.findAllProducts();
-      return res.status(200).json({
-        message: 'All products fetched successfully.',
+      res.status(200).json({
+        message: 'All bikes fetched successfully.',
         status: true,
         data: products,
       });
@@ -23,20 +23,20 @@ const getAllProducts = async (req: Request, res: Response): Promise<any> => {
     const products = await productServices.findProductsByFilter(filter);
 
     if (products.length === 0) {
-      return res.status(404).json({
-        message: 'No products found for the given search criteria.',
+      res.status(404).json({
+        message: 'No bikes found for the given search criteria.',
         status: false,
         data: [],
       });
     }
 
-    return res.status(200).json({
+    res.status(200).json({
       message: 'Bikes retrieved successfully',
       status: true,
       data: products,
     });
   } catch (err: any) {
-    return res.status(500).json({
+    res.status(500).json({
       message: 'An error occurred while fetching bikes.',
       status: false,
       error: err.message || err,
@@ -49,7 +49,7 @@ const getAllProducts = async (req: Request, res: Response): Promise<any> => {
 const createProduct = async (req: Request, res: Response) => {
   try {
     // Extract product details from the request body
-    const { product } = req.body;
+    const product = req.body;
 
     // Call service to create the product in the database
     const createdProduct = await productServices.createProductInDB(product);

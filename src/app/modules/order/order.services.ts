@@ -2,6 +2,8 @@ import Order from '../order.model';
 import Product from '../product.model';
 import { IOrder } from './order.interface';
 
+// * Creating an order into database *
+
 const createOrderInDB = async (order: IOrder) => {
   const productId = order.product;
 
@@ -31,27 +33,7 @@ const createOrderInDB = async (order: IOrder) => {
   return createdOrder;
 };
 
-// const ordersRevenues = async () => {
-//   const revenues = await Order.aggregate([
-//     {
-//       $project: {
-//         totalRevenue: { $multiply: ['$quantity', '$totalPrice'] },
-//       },
-//     },
-//   ]);
-//   if (revenues.length === 0) {
-//     return 0;
-//   }
-//   const totalRevenue = revenues.reduce(
-//     (acc, curr) => acc + curr.totalRevenue,
-//     0
-//   );
-//   return totalRevenue;
-
-//   // const orders = await Order.find();
-//   // const revenues = orders.reduce((total, order) => total + order.totalPrice, 0);
-//   // return revenues;
-// };
+// * Calculating the total orders revenues *
 
 const ordersRevenues = async () => {
   const result = await Order.aggregate([

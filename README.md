@@ -44,7 +44,7 @@ git clone https://github.com/yourusername/bike-store-eh-munna.git
 cd bike-store-eh-munna
 ```
 
-### 2. Install Dependencies
+### Installation
 
 ```bash
 npm install
