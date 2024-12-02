@@ -17,7 +17,7 @@ app.use('/api/orders', orderRoutes);
 
 // * Define the root route to send a "Hello World!" response *
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!');
+  res.send(`Hello! Welcome to your "Bike Store"`);
 });
 
 export default app;

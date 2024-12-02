@@ -32,6 +32,7 @@ _`Node.js`, `TypeScript`, `Express`, `MongoDB`, `Mongoose`_
    3.5 [Delete a Bike](#5-delete-a-bike)  
    3.6 [Order a Bike](#6-order-a-bike)  
    3.7 [Calculate Revenue](#7-calculate-revenue)
+4. [Live: Application Hosting](#application-hosting)
 
 ---
 
@@ -82,6 +83,12 @@ Start the application in development mode:
 
 ```bash
 npm run start:dev
+```
+
+Start the application in production mode:
+
+```bash
+npm run start:prod
 ```
 
 ---
@@ -204,5 +211,11 @@ npm run start:dev
   }
 }
 ```
+
+---
+
+## Application Hosting
+
+[Bike Store Express Application Live On...](https://bike-store-eh-munna.vercel.app/)
 
 ---
