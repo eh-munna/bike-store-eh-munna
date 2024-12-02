@@ -216,6 +216,6 @@ npm run start:prod
 
 ## Application Hosting
 
-[Bike Store Express Application Live On...](https://bike-store-eh-munna.vercel.app/)
+<a href="https://bike-store-eh-munna.vercel.app/" target="_blank">Bike Store Express Application Live On...</a>
 
 ---
