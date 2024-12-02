@@ -43,6 +43,9 @@ Follow these steps to set up the project locally:
 
 ```bash
 git clone https://github.com/eh-munna/bike-store-eh-munna.git
+```
+
+```bash
 cd bike-store-eh-munna
 ```
 
