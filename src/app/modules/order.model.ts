@@ -1,15 +1,20 @@
 import { Schema, model } from 'mongoose';
+import validator from 'validator';
 import { IOrder } from './order/order.interface';
 
 export const orderSchema = new Schema<IOrder>(
   {
     email: {
       type: String,
-      required: true,
+      required: [true, 'Email is required'],
+      validate: {
+        validator: (value: string) => validator.isEmail(value),
+        message: 'Please provide a valid email address',
+      },
     },
     product: {
       type: String,
-      required: true,
+      required: [true, 'Product is required'],
     },
     quantity: {
       type: Number,

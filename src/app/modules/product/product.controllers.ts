@@ -3,13 +3,12 @@ import productServices from './product.services';
 
 // * Get all the products *
 
-// Controller: Fetch all products or filter by category, brand, or name
 const getAllProducts = async (req: Request, res: Response) => {
   try {
-    // Extract query parameters: category, brand, name
+    // * Query all the products *
     const filter = req.query;
 
-    // If no filters are provided, return all products
+    // * If no filters are provided, return all products *
     if (!filter) {
       const products = await productServices.findAllProducts();
       res.status(200).json({
@@ -19,7 +18,7 @@ const getAllProducts = async (req: Request, res: Response) => {
       });
     }
 
-    // Fetch filtered products from service
+    // * Fetch filtered products from service *
     const products = await productServices.findProductsByFilter(filter);
 
     if (products.length === 0) {
@@ -30,12 +29,15 @@ const getAllProducts = async (req: Request, res: Response) => {
       });
     }
 
+    // * Send success response with the data *
     res.status(200).json({
       message: 'Bikes retrieved successfully',
       status: true,
       data: products,
     });
   } catch (err: any) {
+    // * Send error response if something goes wrong  *
+
     res.status(500).json({
       message: 'An error occurred while fetching bikes.',
       status: false,
@@ -48,20 +50,20 @@ const getAllProducts = async (req: Request, res: Response) => {
 // * Create a new product controller *
 const createProduct = async (req: Request, res: Response) => {
   try {
-    // Extract product details from the request body
+    // * Extract product details from the request body *
     const product = req.body;
 
-    // Call service to create the product in the database
+    // * Call service to create the product in the database *
     const createdProduct = await productServices.createProductInDB(product);
 
-    // Send success response with the created product data
+    // * Send success response with the created product data *
     res.status(200).json({
       message: 'Bike created successfully',
       status: true,
       data: createdProduct,
     });
   } catch (err: any) {
-    // Send error response if something goes wrong
+    // * Send error response if something goes wrong *
     res.status(500).json({
       message: 'An error occurred while creating the bike',
       status: false,
@@ -74,20 +76,29 @@ const createProduct = async (req: Request, res: Response) => {
 // * Get a specific product controller *
 const getProductById = async (req: Request, res: Response) => {
   try {
-    // Extract product ID from the request parameters
+    // * Extract product ID from the request parameters *
     const { productId } = req.params;
 
-    // Call service to fetch the product from the database
+    // * Call service to fetch the product from the database *
     const product = await productServices.findProductById(productId);
 
-    // Send success response with the product data
+    // * Send success response with the product data *
     res.status(200).json({
       message: 'Bike fetched successfully',
       status: true,
       data: product,
     });
   } catch (err: any) {
-    // Send error response if something goes wrong
+    // * Send error response if something goes wrong *
+
+    if (err.message === 'Product not found') {
+      res.status(404).json({
+        message: 'Product not found. Please check the provided ID.',
+        status: false,
+      });
+      return;
+    }
+
     res.status(500).json({
       message: 'An error occurred while fetching the bike',
       status: false,
@@ -100,24 +111,33 @@ const getProductById = async (req: Request, res: Response) => {
 // * Update an existing product controller *
 const updateProduct = async (req: Request, res: Response) => {
   try {
-    // Extract product ID from the request parameters
+    // * Extract product ID from the request parameters *
     const { productId } = req.params;
     const updateData = req.body;
 
-    // Call service to update the product in the database
+    // * Call service to update the product in the database *
     const product = await productServices.updateProductInDB(
       productId,
       updateData
     );
 
-    // Send success response with the updated product data
+    // * Send success response with the updated product data *
     res.status(200).json({
       message: 'Bike updated successfully',
       status: true,
       data: product,
     });
   } catch (err: any) {
-    // Send error response if something goes wrong
+    // * Send error response if something goes wrong *
+
+    if (err.message === 'Product not found') {
+      res.status(404).json({
+        message: 'Product not found. Please check the provided ID.',
+        status: false,
+      });
+      return;
+    }
+
     res.status(500).json({
       message: 'An error occurred while updating the bike',
       status: false,
@@ -130,16 +150,26 @@ const updateProduct = async (req: Request, res: Response) => {
 // * Delete an existing product in the database *
 const deleteProduct = async (req: Request, res: Response) => {
   try {
+    // * Extract product ID from the request parameters *
     const { productId } = req.params;
     const product = await productServices.deleteProductInDB(productId);
-    // Send success response with the deleted product data
+    // * Send success response with the deleted product data *
     res.status(200).json({
       message: 'Bike deleted successfully',
       status: true,
       data: {},
     });
   } catch (err: any) {
-    // Send error response if something goes wrong
+    // * Send error response if something goes wrong *
+
+    if (err.message === 'Product not found') {
+      res.status(404).json({
+        message: 'Product not found. Please check the provided ID.',
+        status: false,
+      });
+      return;
+    }
+
     res.status(500).json({
       message: 'An error occurred while deleting the bike',
       status: false,

@@ -11,6 +11,7 @@ const findAllProducts = async () => {
 };
 
 // * Create a new product record in the database *
+
 const createProductInDB = async (product: IProduct) => {
   const createdProduct = await Product.create(product);
   return createdProduct;
@@ -20,6 +21,7 @@ const createProductInDB = async (product: IProduct) => {
 
 const findProductById = async (productId: string) => {
   const product = await Product.findOne({ _id: productId });
+
   if (!product) {
     throw new Error('Product not found');
   }
@@ -55,6 +57,9 @@ const updateProductInDB = async (productId: string, product: any) => {
     { $set: product },
     { new: true }
   );
+  if (!updatedProduct) {
+    throw new Error('Product not found');
+  }
   return updatedProduct;
 };
 
